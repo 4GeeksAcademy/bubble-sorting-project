@@ -7,10 +7,8 @@ import "bootstrap";
 import "./style.css";
 
 window.onload = function() {
-  //write your code here
-  // First, we need to create the function that creates cards
   let suits = ["♦", "♥", "♠", "♣"];
-  let number = [
+  let numbers = [
     "A",
     "2",
     "3",
@@ -25,20 +23,21 @@ window.onload = function() {
     "Q",
     "K"
   ];
-  // let redOnes = ["♦", "♥"];
-  // Second, another one that creates random numbers and symbols
+
+  let cardList = [];
 
   function completeCard() {
-    const suit = Math.floor(Math.random() * suits.length);
-    const numb3r = Math.floor(Math.random() * number.length);
-    return { suit, numb3r };
+    const suit = suits[Math.floor(Math.random() * suits.length)];
+    const number = numbers[Math.floor(Math.random() * numbers.length)];
+    return { suit, number };
   }
-  function createCards() {
+
+  function renderCards() {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
     cardList.forEach(card => {
       const cardHTML = `
-        <div class="card" style="width: 100px; height: 150px;">
+        <div class="card" style="display: inline-block; width: 100px; height: 150px; margin: 10px;">
           <div class="card-body row row-cols-1">
             <div style="float: left;">
               <p>${card.suit}</p>
