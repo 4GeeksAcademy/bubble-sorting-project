@@ -16,11 +16,16 @@
   <body style="background-color: green;">
     <div>
       <p style="display: inline-block; margin-right: 10px;">Original:</p>
-      <input type="number" id="myInput" name="number" />
+      <input type="number" id="myInput" name="number" min="1" max="10" />
       <button id="myDraw">draw</button>
       <button id="mySort">sort</button>
     </div>
     <div id="card-container"></div>
+    <div>
+      <p style="display: inline-block; margin-right: 10px;">Bubble log:</p>
+    </div>
+    <div id="BubbleLog"></div>
+
     <script src="app.js"></script>
   </body>
 </html>
