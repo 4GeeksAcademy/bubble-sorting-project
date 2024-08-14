@@ -6,7 +6,7 @@
 import "bootstrap";
 import "./style.css";
 
-window.onload = function () {
+window.onload = function() {
   let suits = ["♦", "♥", "♠", "♣"];
   let numbers = [
     "A",
@@ -61,58 +61,62 @@ window.onload = function () {
       cardList.push(completeCard());
     }
     renderCards();
-    bubbleSortCards();
   }
-
   function bubbleSortCards() {
     let wall = cardList.length - 1;
     while (wall > 0) {
       let index = 0;
       while (index < wall) {
         if (cardList[index].number > cardList[index + 1].number) {
-          let aux = cardList[index];
-          cardList[index] = cardList[index + 1];
-          cardList[index + 1] = aux;
+          [cardList[index], cardList[index + 1]] = [
+            cardList[index + 1],
+            cardList[index]
+          ];
         }
         index++;
       }
       wall--;
-      function renderLog() {
-        const LogContainer = document.getElementById("BubbleLog");
-        LogContainer.innerHTML = "";
-        cardList.forEach(card => {
-          const LogHTML = `
-            <div class="card" style="display: inline-block; width: 100px; height: 150px; margin: 10px;">
-              <div class="card-body row row-cols-1">
-                <div style="float: left;">
-                  <p>${card.suit}</p>
-                </div>
-                <div class="align-self-center" style="text-align: center; ">
-                  <p>${card.number}</p>
-                </div>
-                <div style="float: right; transform: rotate(180deg);">
-                  <p>${card.suit}</p>
-                </div>
+      renderLog(cardList, wall);
+    }
+    renderCards();
+  }
+
+  function renderLog(cardList, wall) {
+    const logContainer = document.getElementById("bubbleLog");
+    logContainer.innerHTML += `
+      <p>Iteration ${cardList.length - wall - 1}:</p>
+      <div class="log-cards">
+        ${cardList
+          .map(
+            card => `
+          <div class="card" style="display: inline-block; width: 100px; height: 150px; margin: 10px;">
+            <div class="card-body row row-cols-1">
+              <div style="float: left;">
+                <p>${card.suit}</p>
+              </div>
+              <div class="align-self-center" style="text-align: center; ">
+                <p>${card.number}</p>
+              </div>
+              <div style="float: right; transform: rotate(180deg);">
+                <p>${card.suit}</p>
               </div>
             </div>
-          `;
-          LogContainer.innerHTML += LogHTML;
-        });
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+  }
+  const numCardsInput = document.getElementById("myInput");
+  const generateButton = document.getElementById("myDraw");
+  const sortButton = document.getElementById("mySort");
 
-        console.log(
-          `Iteration ${wall}: ${cardList
-            .map(card => `${card.number} of ${card.suit}`)
-            .join(", ")}`
-        );
-      }
-      renderCards();
-    }
-
-    const numCardsInput = document.getElementById("myInput");
-    const generateButton = document.getElementById("myDraw");
-
-    generateButton.addEventListener("click", () => {
-      const numCards = parseInt(numCardsInput.value);
-      createCards(numCards);
-    });
-  };
+  generateButton.addEventListener("click", () => {
+    const numCards = parseInt(numCardsInput.value);
+    createCards(numCards);
+  });
+  sortButton.addEventListener("click", () => {
+    bubbleSortCards();
+  });
+};
